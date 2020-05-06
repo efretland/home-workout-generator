@@ -46,7 +46,9 @@ wodf$body_area <- factor(wodf$body_area)
 
 # ---- Workout Selection Function ----
 
-# todaysworkout <- function(x, hard = TRUE, moderate = FALSE, light = FALSE) {
+# Simplified workout generating function
+
+# todaysworkout <- function(x) {
   
 #  print(sample(wodf$exercise_name, 6))
   
@@ -204,10 +206,12 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
 # Add an encouragement message, different every day
 
 
+# To get output:
+
 todaysworkout(upper = TRUE)
-todaysworkout(lower = TRUE)
-todaysworkout(core = TRUE)
-todaysworkout(full = TRUE)
+# todaysworkout(lower = TRUE)
+# todaysworkout(core = TRUE)
+# todaysworkout(full = TRUE)
 
 
 
