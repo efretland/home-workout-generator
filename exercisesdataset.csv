@@ -3,11 +3,11 @@ pushups,chest,chest,0,2
 close grip pushups,arms,triceps,0,3
 diamond pushups,arms,triceps,0,3
 wide grip pushups,chest,chest,0,2
-cross grip pushups,arms,triceps,0,3
-raised feet pushups,chest,chest,0,3
+cross grip pushups,arms,triceps,0,4
+raised feet pushups,chest,chest,0,2
 bw tricep extensions,arms,triceps,0,3
 bw shoulder press,shoulders,shoulders,0,2
-walking pushups,chest,chest,0,3
+swaying pushups,chest,chest,0,3
 supermans,back,back,0,1
 y supermans,back,back,0,1
 w supermans,back,back,0,1
@@ -22,7 +22,7 @@ rb hammer curls light,arms,biceps,0,1
 rb hammer curls moderate,arms,biceps,0,2
 rb hammer curls heavy,arms,biceps,0,3
 rb slow curls,arms,biceps,0,2
-reverse pushups,arms,biceps,0,3
+reverse pushups,arms,biceps,0,4
 doorway pulls,back,back,0,1
 lunges,legs,hamstring,0,1
 reverse lunges,legs,hamstring,0,1
@@ -32,9 +32,13 @@ squats,legs,quads,0,1
 single leg squats,legs,glutes,0,3
 burpees,full,full,1,2
 lunge jumps,legs,hamstring,1,2
-hollow rocks,core,core,0,1
+hollow rocks,core,core,0,3
 russian twists,core,core,0,1
 crunches,core,core,0,1
-twist crunches,core,core,0,1
+twist crunches,core,core,0,2
 jackknives,core,core,0,2
 daltons,core,core,0,3
+stepover pushups,chest,chest,0,2
+plank,core,core,0,0.5
+tall plank,core,core,0,0.5
+wall sit,legs,quads,1,0.5
