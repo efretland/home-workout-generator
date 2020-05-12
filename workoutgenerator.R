@@ -15,8 +15,10 @@ library(e1071)
 
 setwd("C:/Users/User/Documents/Data Science Projects/Workout Generator")
 
-wodf <- read.csv("exercisesdataset.csv")
-wodf <- data.frame(wodf)
+wodf      <- read.csv("exercisesdataset.csv")
+wodf      <- data.frame(wodf)
+messages  <- read.csv("motivational_messages.csv")
+
 
 # ---- Viewing Data ---- 
 
@@ -29,7 +31,7 @@ for (i in 1:ncol(wodf)) {
   wodf[,i] <- factor(wodf[,i])
 }
 
-wodf$bodyarea <- NA
+wodf$body_area <- NA
 
 wodf$body_area[wodf$muscle_general == "arms" |
                 wodf$muscle_general == "chest" |
@@ -44,11 +46,13 @@ wodf$body_area[wodf$muscle_general == "core"]         <- "core"
 wodf$body_area <- factor(wodf$body_area)
 
 
+messages$message <- as.character(messages$message)
+
+
+
 # ---- Workout Selection Function ----
 
-# Simplified workout generating function
-
-# todaysworkout <- function(x) {
+# todaysworkout <- function(x, hard = TRUE, moderate = FALSE, light = FALSE) {
   
 #  print(sample(wodf$exercise_name, 6))
   
@@ -57,7 +61,7 @@ wodf$body_area <- factor(wodf$body_area)
 
 
 
-# ---- Next Steps ----
+# ---- Steps ----
 
 
 # Write a function that can throw together "Upper", "Leg", "Core", "All" workouts
@@ -71,7 +75,8 @@ wodf$body_area <- factor(wodf$body_area)
 # }
 
 
-todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = FALSE) {
+todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = FALSE, 
+                          hard = FALSE, light = FALSE) {
   
   
   if (upper == TRUE) {
@@ -90,15 +95,9 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
   
   if (full == TRUE) {
     
-    # Logic here needs to include - selecting a random number of exercises
-    # Selecting a random number of sets (same number for all exercises)
-    # Number of reps will be a factor of difficulty and number of sets
-    # Example: if sets = 4, then for my.df[i,3], reps = (8/sets * 15/difficulty)
-      # would need to figure out how to make sure the final output in my.df is
-      # rounded up to full numbers
     
     exerciseinfo <- wodf[sample(nrow(wodf),exercisecount),]
-    exerciseinfo$difficulty <- as.numeric(exerciseinfo$difficulty)
+    exerciseinfo$difficulty <- as.numeric(as.character(exerciseinfo$difficulty))
     
     my.df[,1] <- exerciseinfo$exercise_name
     my.df[,2] <- sample(5:7, 1)
@@ -107,19 +106,31 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
     my.df[,4] <- format(my.df$Reps, digits = 0)
     my.df     <- my.df[ , -which(names(my.df) %in% c("Difficulty"))]
    
+    time.target      <- as.numeric(as.character(format((1.1 * sum(my.df$Sets)), digits = 0)))
+    
+    if (hard == TRUE) {
+      my.df$Sets <- (1 + my.df$Sets)
+      time.target <- (time.target + 4)
+    }
+    if (light == TRUE) {
+      my.df$Reps <- as.numeric(as.character(my.df$Reps))
+      my.df$Reps <- my.df$Reps/1.2
+      my.df$Reps <- format(my.df$Reps, digits = 0)
+      time.target <- (time.target - 2)
+    }
+    
     print(my.df)
+    
   }
   
   
   if (upper == TRUE) { 
     
-    # Logic should select (at random) 2 chest, then 2 back, then 2 bicep, then 2 tricep exercises
-    # can do it 1 at a time from my.df[1,1] , my.df[2,1], etc.
-    # should do it in order, i.e. [1,1] is chest, [2,1] is back, [3,1] is tricep etc
     
     chestexercises  <- wodf[wodf$muscle_specific == "chest",]
     backexercises   <- wodf[wodf$muscle_specific == "back",]
-    tricepexercises <- wodf[wodf$muscle_specific == "triceps",]
+    tricepexercises <- wodf[wodf$muscle_specific == "triceps" |
+                              wodf$muscle_specific == "shoulders",]
     bicepexercises  <- wodf[wodf$muscle_specific == "biceps",]
     
     selectedchest   <- chestexercises[sample(nrow(chestexercises),2),]
@@ -130,7 +141,7 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
     my.df1          <- rbind(selectedchest, selectedback, selectedtricep, selectedbicep)
     
     exerciseinfo    <- my.df1[c(1,3,5,7,2,4,6,8),]
-    exerciseinfo$difficulty <- as.numeric(exerciseinfo$difficulty)
+    exerciseinfo$difficulty <- as.numeric(as.character(exerciseinfo$difficulty))
     
     my.df[,1] <- exerciseinfo$exercise_name
     my.df[,2] <- sample(4:5, 1)
@@ -139,10 +150,26 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
     my.df[,4] <- format(my.df$Reps, digits = 0)
     my.df     <- subset(my.df, select = -c(Difficulty))
     
+    time.target      <- as.numeric(as.character(format((1.1 * sum(my.df$Sets)), digits = 0)))
+    
+    if (hard == TRUE) {
+      my.df$Sets <- (1 + my.df$Sets)
+      time.target <- (time.target + 4)
+    }
+    if (light == TRUE) {
+      my.df$Reps <- as.numeric(as.character(my.df$Reps))
+      my.df$Reps <- my.df$Reps/1.2
+      my.df$Reps <- format(my.df$Reps, digits = 0)
+      time.target <- (time.target - 2)
+    }
+    
     print(my.df)
+    
   }
   
   if (lower == TRUE) {
+    
+    
     
     legexercises  <- wodf[wodf$muscle_general == "legs",]
     fullexercises <- wodf[wodf$muscle_specific == "full",]
@@ -153,7 +180,7 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
     my.df1        <- rbind(selectedfull, selectedleg)
     
     exerciseinfo  <- my.df1[c(2,3,1,4:exercisecount),]
-    exerciseinfo$difficulty <- as.numeric(exerciseinfo$difficulty)
+    exerciseinfo$difficulty <- as.numeric(as.character(exerciseinfo$difficulty))
     
     my.df[,1] <- exerciseinfo$exercise_name
     my.df[,2] <- sample(4:5, 1)
@@ -162,10 +189,26 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
     my.df[,4] <- format(my.df$Reps, digits = 0)
     my.df     <- subset(my.df, select = -c(Difficulty))
     
+    time.target      <- as.numeric(as.character(format((1.1 * sum(my.df$Sets)), digits = 0)))
+    
+    if (hard == TRUE) {
+      my.df$Sets <- (1 + my.df$Sets)
+      time.target <- (time.target + 4)
+    }
+    if (light == TRUE) {
+      my.df$Reps <- as.numeric(as.character(my.df$Reps))
+      my.df$Reps <- my.df$Reps/1.2
+      my.df$Reps <- format(my.df$Reps, digits = 0)
+      time.target <- (time.target - 2)
+    }
+    
     print(my.df)
+    
   }
   
   if (core == TRUE) {
+    
+    
     
     coreexercises   <- wodf[wodf$muscle_general == "core",]
     otherexercises  <- wodf[wodf$muscle_general != "core",]
@@ -176,7 +219,7 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
     my.df1          <- rbind(selectedcore, selectedother)
     
     exerciseinfo    <- my.df1[c(1,2,5,3,4,6),]
-    exerciseinfo$difficulty <- as.numeric(exerciseinfo$difficulty)
+    exerciseinfo$difficulty   <- as.numeric(as.character(exerciseinfo$difficulty))
     
     my.df[,1] <- exerciseinfo$exercise_name
     my.df[,2] <- sample(4:5, 1)
@@ -185,33 +228,54 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
     my.df[,4] <- format(my.df$Reps, digits = 0)
     my.df     <- subset(my.df, select = -c(Difficulty))
     
+    time.target      <- as.numeric(as.character((1.5 * sum(my.df$Sets))))
+    
+    if (hard == TRUE) {
+      my.df$Sets <- (1 + my.df$Sets)
+      time.target <- (time.target + 4)
+    }
+    if (light == TRUE) {
+      my.df$Reps <- as.numeric(as.character(my.df$Reps))
+      my.df$Reps <- my.df$Reps/1.2
+      my.df$Reps <- format(my.df$Reps, digits = 0)
+      time.target <- (time.target - 2)
+    }
+    
     print(my.df)
+    
   }
-  cat("Keep up the pace throughout the workout!")
+  
+  msg         <- messages[sample(1:nrow(messages), 1),1]
+
+  cat("Try and finish the workout in less than", time.target, "minutes. \n")
+  cat(msg)
+  
 }
 
 
 # ---- Potential Improvements ----
 
-# Including a "goal completion time"
+# (DONE)    Including a "goal completion time"
 
-# in the "all" workout type, preventing same type of exercises back to back
+#           in the "all" workout type, preventing same muscle_general exercises back to back
 
-# fine tuning the rep counts
+# (DONE)    fine tuning the rep counts
 
-# including workout types that involve holds rather than reps
+# (DONE)    including workout types that involve holds rather than reps
 
-# make adjustment to allow for light, moderate, difficult workouts
+#           make adjustment to allow for light, moderate, difficult workouts
 
-# Add an encouragement message, different every day
+# (DONE)    Add an encouragement message, different every day
+
+#           Look into making an app? How does Shiny work?
+
+#           Summary statistic of what the app generates - run it 100 times in each condition, identify:
+              # average time of workout
+              # frequency of each exercise over all workouts
+              
 
 
-# To get output:
 
-todaysworkout(upper = TRUE)
-# todaysworkout(lower = TRUE)
-# todaysworkout(core = TRUE)
-# todaysworkout(full = TRUE)
 
 
 
