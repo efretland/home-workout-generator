@@ -263,7 +263,7 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
 
 # (DONE)    including workout types that involve holds rather than reps
 
-#           make adjustment to allow for light, moderate, difficult workouts
+# (DONE)    make adjustment to allow for light, moderate, difficult workouts
 
 # (DONE)    Add an encouragement message, different every day
 
