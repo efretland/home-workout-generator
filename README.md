@@ -3,7 +3,7 @@
 Home workout generator (from exercises done with minimal equipment)
 
 This workout generator is a script that, when run, creates a comprehensive body-weight workout that should take anywhere from 30-50 minutes to complete. This project stems from the need to quickly come up with effective, thorough, and non-repetitive workouts that are doable at home.
-An important component is that none of these exercises require any equipment aside from a few that require a resistance band.
+An important component is that most of these exercises don't require any equipment. However, some of the exercises do involve using resistance bands or makeshift weights, and this function provides the capability of selecting workouts with and without equipment.
 The final product of the script is a function that can generate any of four kinds of workout - core, upper body, lower body, or full body.
 
 
@@ -14,5 +14,5 @@ R script to write functions to generate workout
 Final output of the todaysworkout() function is:
 
 - Dataframe with 3 columns (exercise name, number of sets, number of reps)
-- Text message with target completion time
-- Text message with words of encouragement
+- Message with target completion time
+- Message with words of encouragement
