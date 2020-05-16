@@ -3,8 +3,7 @@
 # Library loading
 
 # --- Loading Packages --- 
-
-
+library(stringr)
 library(dplyr)
 library(purrr)
 library(tidyr)
@@ -12,16 +11,13 @@ library(tidyverse)
 library(e1071)
 
 # ---- Loading Data ----
-
 setwd("C:/Users/User/Documents/Data Science Projects/Workout Generator")
 
 wodf      <- read.csv("exercisesdataset.csv")
 wodf      <- data.frame(wodf)
 messages  <- read.csv("motivational_messages.csv")
 
-
 # ---- Viewing Data ---- 
-
 str(wodf)
 head(wodf)
 
@@ -36,10 +32,12 @@ wodf$body_area <- NA
 wodf$body_area[wodf$muscle_general == "arms" |
                 wodf$muscle_general == "chest" |
                 wodf$muscle_general == "back" |
-                wodf$muscle_general == "shoulders"]   <- "upper"
+                wodf$muscle_general == "shoulders" |
+                wodf$muscle_general == "upper"]   <- "upper"
 
 wodf$body_area[wodf$muscle_general == "legs" |
-                wodf$muscle_general == "full"]        <- "lower"
+                wodf$muscle_general == "full" |
+                wodf$muscle_general == "lower"]        <- "lower"
 
 wodf$body_area[wodf$muscle_general == "core"]         <- "core"
 
@@ -49,35 +47,36 @@ wodf$body_area <- factor(wodf$body_area)
 messages$message <- as.character(messages$message)
 
 
+# Designating if a workout can only be done inside
 
-# ---- Workout Selection Function ----
+wodf$exercise_name <- as.character(wodf$exercise_name)
 
-# todaysworkout <- function(x, hard = TRUE, moderate = FALSE, light = FALSE) {
-  
-#  print(sample(wodf$exercise_name, 6))
-  
-# }
+wodf$inside <- 0
+
+
+wodf %>%
+  filter(str_detect(wodf$exercise_name, "rb"))
+
+wodf$inside[str_detect(wodf$exercise_name, "rb") == TRUE]   <- 1
+
+wodf$inside[str_detect(wodf$exercise_name, "superman") == TRUE]   <- 1
 
 
 
 
 # ---- Steps ----
 
+# Write a function providing option of "Upper", "Leg", "Core", "Full" workouts
 
-# Write a function that can throw together "Upper", "Leg", "Core", "All" workouts
-
-# Something like 
-# workoutgenerator <- function(x, All = FALSE, Upper = FALSE, Lower = FALSE, Core = FALSE) {
-# if all = TRUE { sample from all exercises }
+# Structure:
+# workoutgenerator <- function(x, Full = FALSE, Upper = FALSE, Lower = FALSE, Core = FALSE) {
+# if full = TRUE { sample from all exercises }
 # if upper = TRUE { sample 2 chest, 2 back, 2 bicep, 2 tricep }
 # if lower = TRUE { sample 5 leg, 2 core }
 # if core = TRUE { sample 4 core, 2 random}
 # }
 
-
-todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = FALSE, 
-                          hard = FALSE, light = FALSE) {
-  
+todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = FALSE, hard = FALSE, light = FALSE,  weights = FALSE) {
   
   if (upper == TRUE) {
     exercisecount <- 8
@@ -91,10 +90,11 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
   
   my.df   <- data.frame(matrix(NA, ncol = 4, nrow = exercisecount))
   colnames(my.df) <- c("Exercise", "Sets", "Difficulty", "Reps")
-  
+
+  if (weights == FALSE)  { wodf <- wodf[wodf$outside == 0,] }
+  if (weights == TRUE)   { wodf <- wodf[wodf$inside == 0,] }
   
   if (full == TRUE) {
-    
     
     exerciseinfo <- wodf[sample(nrow(wodf),exercisecount),]
     exerciseinfo$difficulty <- as.numeric(as.character(exerciseinfo$difficulty))
@@ -118,17 +118,21 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
       my.df$Reps <- format(my.df$Reps, digits = 0)
       time.target <- (time.target - 2)
     }
-    
     print(my.df)
-    
   }
-  
   
   if (upper == TRUE) { 
     
-    
     chestexercises  <- wodf[wodf$muscle_specific == "chest",]
-    backexercises   <- wodf[wodf$muscle_specific == "back",]
+    
+    
+    if (weights == FALSE) {
+    backexercises   <- wodf[wodf$muscle_specific == "back" |
+                              wodf$muscle_specific == "biceps",] 
+    }
+    if (weights == TRUE) {
+    backexercises   <- wodf[wodf$muscle_specific == "back",] 
+    }
     tricepexercises <- wodf[wodf$muscle_specific == "triceps" |
                               wodf$muscle_specific == "shoulders",]
     bicepexercises  <- wodf[wodf$muscle_specific == "biceps",]
@@ -162,14 +166,10 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
       my.df$Reps <- format(my.df$Reps, digits = 0)
       time.target <- (time.target - 2)
     }
-    
     print(my.df)
-    
   }
   
   if (lower == TRUE) {
-    
-    
     
     legexercises  <- wodf[wodf$muscle_general == "legs",]
     fullexercises <- wodf[wodf$muscle_specific == "full",]
@@ -201,14 +201,10 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
       my.df$Reps <- format(my.df$Reps, digits = 0)
       time.target <- (time.target - 2)
     }
-    
     print(my.df)
-    
   }
   
   if (core == TRUE) {
-    
-    
     
     coreexercises   <- wodf[wodf$muscle_general == "core",]
     otherexercises  <- wodf[wodf$muscle_general != "core",]
@@ -240,16 +236,13 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
       my.df$Reps <- format(my.df$Reps, digits = 0)
       time.target <- (time.target - 2)
     }
-    
     print(my.df)
-    
   }
   
   msg         <- messages[sample(1:nrow(messages), 1),1]
 
   cat("Try and finish the workout in less than", time.target, "minutes. \n")
   cat(msg)
-  
 }
 
 
@@ -267,12 +260,13 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
 
 # (DONE)    Add an encouragement message, different every day
 
-#           Look into making an app? How does Shiny work?
+#           Look into making an app - shiny.io
 
 #           Summary statistic of what the app generates - run it 100 times in each condition, identify:
               # average time of workout
               # frequency of each exercise over all workouts
-              
+
+# (DONE)    Include a way to filter exercises that can/cannot be done outside (using weights)
 
 
 

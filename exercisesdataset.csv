@@ -1,44 +1,60 @@
-exercise_name,muscle_general,muscle_specific,cardio,difficulty
-pushups,chest,chest,0,2
-close grip pushups,arms,triceps,0,3
-diamond pushups,arms,triceps,0,3
-wide grip pushups,chest,chest,0,2
-cross grip pushups,arms,triceps,0,4
-raised feet pushups,chest,chest,0,2
-bw tricep extensions,arms,triceps,0,3
-bw shoulder press,shoulders,shoulders,0,2
-swaying pushups,chest,chest,0,3
-supermans,back,back,0,1
-y supermans,back,back,0,1
-w supermans,back,back,0,1
-t supermans,back,back,0,1
-pullup supermans,back,back,0,2
-pushup to supermans,full,full,0,2
-t pushup,chest,chest,0,2
-rb curls light,arms,biceps,0,1
-rb curls moderate,arms,biceps,0,2
-rb curls heavy,arms,biceps,0,3
-rb hammer curls light,arms,biceps,0,1
-rb hammer curls moderate,arms,biceps,0,2
-rb hammer curls heavy,arms,biceps,0,3
-rb slow curls,arms,biceps,0,2
-reverse pushups,arms,biceps,0,4
-doorway pulls,back,back,0,1
-lunges,legs,hamstring,0,1
-reverse lunges,legs,hamstring,0,1
-tuck jumps,legs,hamstring,1,2
-calf raises,legs,calves,0,1
-squats,legs,quads,0,1
-single leg squats,legs,glutes,0,3
-burpees,full,full,1,2
-lunge jumps,legs,hamstring,1,2
-hollow rocks,core,core,0,3
-russian twists,core,core,0,1
-crunches,core,core,0,1
-twist crunches,core,core,0,2
-jackknives,core,core,0,2
-daltons,core,core,0,3
-stepover pushups,chest,chest,0,2
-plank,core,core,0,0.5
-tall plank,core,core,0,0.5
-wall sit,legs,quads,1,0.5
+exercise_name,muscle_general,muscle_specific,cardio,difficulty,outside
+pushups,chest,chest,0,2,0
+close grip pushups,arms,triceps,0,3,0
+diamond pushups,arms,triceps,0,3,0
+wide grip pushups,chest,chest,0,2,0
+cross grip pushups,arms,triceps,0,4,0
+raised feet pushups,chest,chest,0,2,0
+bw tricep extensions,arms,triceps,0,3,0
+bw shoulder press,shoulders,shoulders,0,2,0
+swaying pushups,chest,chest,0,3,0
+supermans,back,back,0,1,0
+y supermans,back,back,0,1,0
+w supermans,back,back,0,1,0
+t supermans,back,back,0,1,0
+pullup supermans,back,back,0,2,0
+pushup to supermans,full,full,0,2,0
+t pushup,chest,chest,0,2,0
+rb curls light,arms,biceps,0,1,0
+rb curls moderate,arms,biceps,0,2,0
+rb curls heavy,arms,biceps,0,3,0
+rb hammer curls light,arms,biceps,0,1,0
+rb hammer curls moderate,arms,biceps,0,2,0
+rb hammer curls heavy,arms,biceps,0,3,0
+rb slow curls,arms,biceps,0,2,0
+reverse pushups,arms,biceps,0,4,0
+standing pulls,back,back,0,1,0
+lunges,legs,hamstring,0,1,0
+reverse lunges,legs,hamstring,0,1,0
+tuck jumps,legs,hamstring,1,2,0
+calf raises,legs,calves,0,1,0
+squats,legs,quads,0,1,0
+single leg squats,legs,glutes,0,3,0
+burpees,full,full,1,2,0
+lunge jumps,legs,hamstring,1,2,0
+hollow rocks,core,core,0,3,0
+russian twists,core,core,0,1,0
+crunches,core,core,0,1,0
+twist crunches,core,core,0,2,0
+jackknives,core,core,0,2,0
+daltons,core,core,0,3,0
+stepover pushups,chest,chest,0,2,0
+plank,core,core,0,0.5,0
+tall plank,core,core,0,0.5,0
+wall sit,legs,quads,1,0.5,0
+weighted lunges,legs,hamstrings,1,2,1
+weighted goblet squats,legs,glutes,0,2,1
+romanian deadlifts,legs,hamstrings,0,2,1
+cb swings,full,full,0,2,1
+weighted side lunges,legs,quads,0,3,1
+cb curls,upper,biceps,0,2,1
+cb hammer curls,upper,biceps,0,3,1
+cb preacher curls,upper,biceps,0,3,1
+rb cross body curls,upper,biceps,0,3,0
+cb wide rows,upper,back,0,2,1
+cb 45 degree rows,upper,back,0,2,1
+cb tight rows,upper,back,0,2,1
+weighted front raises,upper,shoulders,0,3,1
+rb lateral raises,upper,shoulders,0,1,0
+sb shoulder press,upper,shoulders,0,2,1
+cb shrugs,upper,shoulders,0,1,1
