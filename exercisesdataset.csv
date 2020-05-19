@@ -29,7 +29,7 @@ reverse lunges,legs,hamstring,0,1,0
 tuck jumps,legs,hamstring,1,2,0
 calf raises,legs,calves,0,1,0
 squats,legs,quads,0,1,0
-single leg squats,legs,glutes,0,3,0
+single leg squats,legs,glutes,0,4,0
 burpees,full,full,1,2,0
 lunge jumps,legs,hamstring,1,2,0
 hollow rocks,core,core,0,3,0
@@ -56,5 +56,5 @@ cb 45 degree rows,upper,back,0,2,1
 cb tight rows,upper,back,0,2,1
 weighted front raises,upper,shoulders,0,3,1
 rb lateral raises,upper,shoulders,0,1,0
-sb shoulder press,upper,shoulders,0,2,1
+cb shoulder press,upper,shoulders,0,2,1
 cb shrugs,upper,shoulders,0,1,1
