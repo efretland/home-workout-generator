@@ -337,7 +337,7 @@ summary.df[,22]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = 
 summary.df[,23]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, full = TRUE, hard = TRUE, weights = TRUE)))
 summary.df[,24]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, full = TRUE, light = TRUE, weights = TRUE)))
 
-# Potential area for improvement - create a dataframe with logical situations ("upper = TRUE, hard = TRUE") 
+# Potential area for improvement - create a list with logical situations ("upper = TRUE, hard = TRUE") 
   # to allow for creation of a loop that can run this without 24 lines of repeated code.
 
 head(summary.df)
@@ -357,3 +357,14 @@ summaries <- stat.df
 
 # View(summaries)
 
+
+
+# Testing how to store logical/conditional data for looping into the function
+
+# 1 - Storing in list
+
+condlist <- list(c("upper = TRUE"), c("core = TRUE"))
+
+for (i in 1:length(condlist)) {
+  todaysworkout(factor(unlist(condlist[i])))
+}

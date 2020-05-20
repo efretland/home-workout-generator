@@ -24,9 +24,9 @@ rb hammer curls heavy,arms,biceps,0,3,0
 rb slow curls,arms,biceps,0,2,0
 reverse pushups,arms,biceps,0,4,0
 standing pulls,back,back,0,1,0
-lunges,legs,hamstring,0,1,0
-reverse lunges,legs,hamstring,0,1,0
-tuck jumps,legs,hamstring,1,2,0
+lunges,legs,hamstring,0,2,0
+reverse lunges,legs,hamstring,0,2,0
+tuck jumps,legs,hamstring,1,2,1
 calf raises,legs,calves,0,1,0
 squats,legs,quads,0,1,0
 single leg squats,legs,glutes,0,4,0
@@ -46,7 +46,6 @@ weighted lunges,legs,hamstrings,1,2,1
 weighted goblet squats,legs,glutes,0,2,1
 romanian deadlifts,legs,hamstrings,0,2,1
 cb swings,full,full,0,2,1
-weighted side lunges,legs,quads,0,3,1
 cb curls,upper,biceps,0,2,1
 cb hammer curls,upper,biceps,0,3,1
 cb preacher curls,upper,biceps,0,3,1
