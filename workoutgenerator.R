@@ -264,7 +264,7 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
   }
   
   if (summary == TRUE) { 
-    return(time.target)
+    print(time.target)
   }
 }
 
@@ -288,8 +288,8 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
 # (DONE)    Summary statistic of what the app generates - run it 100 times in each condition, identify:
               # average time of workout
 
-#           Improve summary dataframe code
-    # (DONE)  instead of rewriting the todaysworkout function, figure out a way to change the output
+# (DONE)    Improve summary dataframe code
+              # instead of rewriting the todaysworkout function, figure out a way to change the output
               # create a dataframe that includes logical conditions to write a loop to generate summary df
               
 
@@ -303,68 +303,91 @@ todaysworkout <- function(x, full = FALSE, upper = FALSE, lower = FALSE, core = 
 
 # Generating Summary DF
 
+
+# Building logical dataframe to satisfy all todaysworkout() arg combinations
+
+args.df <- data.frame(matrix(NA, nrow = 24, ncol = 8))
+colnames(args.df) <- c("Upper", "Lower", "Core", "Full", "Hard", "Light", "Weights", "Summary")
+
+args.df$Summary           <- TRUE
+args.df$Upper[1:6]        <- TRUE
+args.df$Upper[7:24]       <- FALSE
+
+args.df$Lower[1:6]        <- FALSE
+args.df$Lower[13:24]      <- FALSE
+args.df$Lower[7:12]       <- TRUE
+
+args.df$Core[1:12]        <- FALSE
+args.df$Core[19:24]       <- FALSE
+args.df$Core[13:18]       <- TRUE
+
+args.df$Full[1:18]        <- FALSE
+args.df$Full[19:24]       <- TRUE
+
+args.df$Weights[1:3]      <- FALSE
+args.df$Weights[4:6]      <- TRUE
+args.df$Weights[7:9]      <- FALSE
+args.df$Weights[10:12]    <- TRUE
+args.df$Weights[13:15]    <- FALSE
+args.df$Weights[16:18]    <- TRUE
+args.df$Weights[19:21]    <- FALSE
+args.df$Weights[22:24]    <- TRUE
+
+args.df$Hard  <- FALSE
+args.df$Light <- FALSE
+
+args.df$Hard[c(2,5,8,11,14,17,20,23)]   <- TRUE
+args.df$Light[c(3,6,9,12,15,18,21,24)]  <- TRUE
+
+
+
 n <- 100
+df1 <- data.frame(matrix(NA, nrow = n, ncol = 24))
 
-summary.df <- data.frame(matrix(NA, nrow = n, ncol = 24))
-
-colnames(summary.df) <- c("U", "U.H", "U.L", "U.H.W", "U.W", "U.L.W",
-                          "L", "L.H", "L.L", "L.H.W", "L.W", "L.L.W",
-                          "C", "C.H", "C.L", "C.H.W", "C.W", "C.L.W",
-                          "F", "F.H", "F.L", "F.H.W", "F.W", "F.L.W")
-
-summary.df[,1] <- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, upper = TRUE)))
-summary.df[,2] <- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, upper = TRUE, hard = TRUE)))
-summary.df[,3] <- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, upper = TRUE, light = TRUE)))
-summary.df[,4] <- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, upper = TRUE, weights = TRUE)))
-summary.df[,5] <- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, upper = TRUE, hard = TRUE, weights = TRUE)))
-summary.df[,6] <- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, upper = TRUE, light = TRUE, weights = TRUE)))
-summary.df[,7] <- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, lower = TRUE)))
-summary.df[,8] <- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, lower = TRUE, hard = TRUE)))
-summary.df[,9] <- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, lower = TRUE, light = TRUE)))
-summary.df[,10]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, lower = TRUE, weights = TRUE)))
-summary.df[,11]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, lower = TRUE, hard = TRUE, weights = TRUE)))
-summary.df[,12]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, lower = TRUE, light = TRUE, weights = TRUE)))
-summary.df[,13]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, core = TRUE)))
-summary.df[,14]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, core = TRUE, hard = TRUE)))
-summary.df[,15]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, core = TRUE, light = TRUE)))
-summary.df[,16]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, core = TRUE, weights = TRUE)))
-summary.df[,17]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, core = TRUE, hard = TRUE, weights = TRUE)))
-summary.df[,18]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, core = TRUE, light = TRUE, weights = TRUE)))
-summary.df[,19]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, full = TRUE)))
-summary.df[,20]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, full = TRUE, hard = TRUE)))
-summary.df[,21]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, full = TRUE, light = TRUE)))
-summary.df[,22]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, full = TRUE, weights = TRUE)))
-summary.df[,23]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, full = TRUE, hard = TRUE, weights = TRUE)))
-summary.df[,24]<- unlist(lapply(seq_len(n), function(x) todaysworkout(summary = TRUE, full = TRUE, light = TRUE, weights = TRUE)))
-
-# Potential area for improvement - create a list with logical situations ("upper = TRUE, hard = TRUE") 
-  # to allow for creation of a loop that can run this without 24 lines of repeated code.
-
-head(summary.df)
-
-stat.df <- data.frame(matrix(NA, nrow = 1, ncol = 24))
-
-for (i in 1:ncol(summary.df)) {
-  stat.df[,i] <- (sum(summary.df[,i]) / nrow(summary.df))
+for (i in 1:nrow(args.df)) {
+  
+  for (j in 1:nrow(df1)){
+  df1[j,i] <- todaysworkout(upper = args.df$Upper[i],
+                lower = args.df$Lower[i],
+                core = args.df$Core[i],
+                full = args.df$Full[i],
+                hard = args.df$Hard[i],
+                light = args.df$Light[i],
+                weights = args.df$Weights[i],
+                summary = args.df$Summary[i])
+  }
 }
 
+colnames(df1) <- c("U", "U.H", "U.L", "U.W", "U.H.W", "U.L.W",
+                          "L", "L.H", "L.L", "L.W", "L.H.W", "L.L.W",
+                          "C", "C.H", "C.L", "C.W", "C.H.W", "C.L.W",
+                          "F", "F.H", "F.L", "F.W", "F.H.W", "F.L.W")
+
+
+stat.df <- data.frame(matrix(NA, nrow = 1, ncol =24))
+colnames(stat.df) <- colnames(df1)
+
+for (i in 1:ncol(df1)) {
+  stat.df[,i] <- (sum(df1[,i]) / nrow(df1))
+}
+
+stat.df <- t(stat.df)
+stat.df <- as.data.frame(stat.df)
+stat.df$type <- NA
+# stat.df$type <- rep(1:6, 4)
+stat.df$type[1:6] <- "Upper"
+stat.df$type[7:12] <- "Lower"
+stat.df$type[13:18] <- "Core"
+stat.df$type[19:24] <- "Full"
+
+stat.df$Args <- c("U", "U.H", "U.L", "U.W", "U.H.W", "U.L.W",
+                  "L", "L.H", "L.L", "L.W", "L.H.W", "L.L.W",
+                  "C", "C.H", "C.L", "C.W", "C.H.W", "C.L.W",
+                  "F", "F.H", "F.L", "F.W", "F.H.W", "F.L.W")
+stat.df$Gen.Args <- rep(c("Base", "Heavy", "Light", "Weights", "Weights, Heavy", "Weights, Light"), 4)
+colnames(stat.df) <- c("Avg.Time", "Type", "Args", "Gen.Args")
+stat.df <- stat.df[,c("Type", "Gen.Args", "Avg.Time")]
+
+stat.df <- spread(stat.df, Gen.Args, Avg.Time)
 print(stat.df)
 
-colnames(stat.df) <- colnames(summary.df)
-# summary.df <- rbind(stat.df, summary.df)
-# rownames(summary.df) <- c("Summary", 1:100)
-summaries <- stat.df
-
-# View(summaries)
-
-
-
-# Testing how to store logical/conditional data for looping into the function
-
-# 1 - Storing in list
-
-condlist <- list(c("upper = TRUE"), c("core = TRUE"))
-
-for (i in 1:length(condlist)) {
-  todaysworkout(factor(unlist(condlist[i])))
-}
